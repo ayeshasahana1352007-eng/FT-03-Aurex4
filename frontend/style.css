@@ -11,10 +11,301 @@ body {
 }
 
 
-/* SIDEBAR */
+/* =====================================================
+   LOGIN PAGE
+===================================================== */
+
+.login-page {
+    min-height: 100vh;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f4f7fb;
+
+    padding: 30px;
+}
+
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 40px;
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+
+.login-logo {
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+
+.login-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #2563eb;
+
+    color: white;
+
+    border-radius: 14px;
+}
+
+
+.login-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+
+.login-logo h1 {
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 700;
+}
+
+
+.login-logo p {
+    margin: 5px 0 0;
+
+    color: #64748b;
+}
+
+
+.login-heading {
+    margin-bottom: 25px;
+}
+
+
+.login-heading h2 {
+    margin: 0 0 6px;
+
+    font-size: 24px;
+}
+
+
+.login-heading p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+.login-card form {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.login-card form > label {
+    margin-bottom: 7px;
+
+    margin-top: 15px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #334155;
+}
+
+
+.input-with-icon {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.input-with-icon svg {
+    position: absolute;
+
+    left: 14px;
+
+    width: 18px;
+    height: 18px;
+
+    color: #64748b;
+}
+
+
+.input-with-icon input {
+    width: 100%;
+
+    padding: 13px 14px 13px 43px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    box-sizing: border-box;
+}
+
+
+.input-with-icon input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+.login-options {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin: 18px 0;
+
+    font-size: 13px;
+}
+
+
+.remember-me {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #475569;
+}
+
+
+.remember-me input {
+    width: auto;
+}
+
+
+.login-options a {
+    color: #2563eb;
+
+    text-decoration: none;
+}
+
+
+.login-options a:hover {
+    text-decoration: underline;
+}
+
+
+.login-button {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.login-button:hover {
+    background: #1d4ed8;
+}
+
+
+.login-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+.login-message {
+    text-align: center;
+
+    font-size: 13px;
+
+    margin-top: 15px;
+
+    min-height: 18px;
+}
+
+
+.login-footer {
+    text-align: center;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #eef2f7;
+}
+
+
+.login-footer p {
+    margin: 0;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+
+/* Application hidden until login */
+
+#appContent {
+    display: none;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 .sidebar {
     position: fixed;
+
     left: 0;
     top: 0;
 
@@ -22,104 +313,166 @@ body {
     height: 100vh;
 
     background: #111827;
+
     color: white;
 
     padding: 25px 15px;
 }
 
+
 .logo {
     text-align: center;
+
     margin-bottom: 35px;
 }
+
 
 .logo h2 {
     font-size: 25px;
 }
 
+
 .logo p {
     font-size: 12px;
+
     color: #9ca3af;
+
     margin-top: 5px;
 }
 
 
 nav {
     display: flex;
+
     flex-direction: column;
+
     gap: 8px;
 }
 
 
 .nav-btn {
     width: 100%;
+
     padding: 13px;
 
     border: none;
+
     border-radius: 8px;
 
     background: transparent;
+
     color: #d1d5db;
 
     text-align: left;
+
     cursor: pointer;
 
     font-size: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
 }
 
 
 .nav-btn:hover,
 .nav-btn.active {
     background: #2563eb;
+
     color: white;
 }
 
 
-/* MAIN */
+.nav-btn svg {
+    width: 18px;
+
+    height: 18px;
+
+    stroke-width: 2;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
 
 .main-content {
     margin-left: 240px;
+
     padding: 30px;
 }
 
 
-/* TOP BAR */
+/* =====================================================
+   TOP BAR
+===================================================== */
 
 .topbar {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     margin-bottom: 30px;
 }
 
+
 .topbar h1 {
     font-size: 28px;
 }
 
+
 .topbar p {
     color: #6b7280;
+
     margin-top: 5px;
 }
 
+
 .user {
     background: white;
+
     padding: 12px 18px;
+
     border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
 }
 
 
-/* PAGES */
+.user svg {
+    width: 18px;
+
+    height: 18px;
+}
+
+
+/* =====================================================
+   PAGES
+===================================================== */
 
 .page {
     display: none;
 }
+
 
 .active-page {
     display: block;
 }
 
 
-/* CARDS */
+/* =====================================================
+   CARDS
+===================================================== */
 
 .cards {
     display: grid;
@@ -144,27 +497,36 @@ nav {
         0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
+
 .card p {
     color: #6b7280;
+
     margin-bottom: 10px;
 }
 
+
 .card h2 {
     font-size: 25px;
+
     margin-bottom: 8px;
 }
 
+
 .card span {
     font-size: 13px;
+
     color: #6b7280;
 }
+
 
 .positive {
     color: #16a34a !important;
 }
 
 
-/* SECTION CARD */
+/* =====================================================
+   SECTION CARD
+===================================================== */
 
 .section-card {
     background: white;
@@ -182,26 +544,51 @@ nav {
 
 .section-title {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 }
 
 
-/* GOALS */
+/* =====================================================
+   GOALS
+===================================================== */
 
 .goal {
     margin-top: 25px;
 }
 
+
 .goal-header {
     display: flex;
+
     justify-content: space-between;
 
     margin-bottom: 10px;
 }
 
+
+.goal-header span,
+.goal-header h3 {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.goal-header svg {
+    width: 18px;
+
+    height: 18px;
+}
+
+
 .progress {
     width: 100%;
+
     height: 10px;
 
     background: #e5e7eb;
@@ -211,11 +598,13 @@ nav {
     overflow: hidden;
 }
 
+
 .progress-bar {
     height: 100%;
 
     background: #2563eb;
 }
+
 
 .goal p {
     color: #6b7280;
@@ -226,7 +615,9 @@ nav {
 }
 
 
-/* TWO COLUMN */
+/* =====================================================
+   TWO COLUMN
+===================================================== */
 
 .two-column {
     display: grid;
@@ -238,18 +629,22 @@ nav {
 }
 
 
-/* EXPENSE */
+/* =====================================================
+   EXPENSE
+===================================================== */
 
 .expense-item {
     display: flex;
 
     justify-content: space-between;
+
     align-items: center;
 
     padding: 15px 0;
 
     border-bottom: 1px solid #eee;
 }
+
 
 .expense-item p {
     color: #6b7280;
@@ -260,7 +655,25 @@ nav {
 }
 
 
-/* BUTTON */
+.expense-item span {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.expense-item svg {
+    width: 18px;
+
+    height: 18px;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
 
 button {
     background: #2563eb;
@@ -276,12 +689,15 @@ button {
     cursor: pointer;
 }
 
+
 button:hover {
     opacity: 0.9;
 }
 
 
-/* FORMS */
+/* =====================================================
+   FORMS
+===================================================== */
 
 .form-card {
     background: white;
@@ -329,11 +745,30 @@ button:hover {
 }
 
 
-/* RECOMMENDATION */
+/* =====================================================
+   RECOMMENDATION
+===================================================== */
 
 .recommendation {
     background: #eff6ff;
 }
+
+
+.recommendation h2 {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.recommendation h2 svg {
+    width: 20px;
+
+    height: 20px;
+}
+
 
 .recommendation p {
     margin: 15px 0;
@@ -342,7 +777,9 @@ button:hover {
 }
 
 
-/* CHART */
+/* =====================================================
+   CHART
+===================================================== */
 
 .chart-container {
     background: white;
@@ -357,7 +794,9 @@ button:hover {
 }
 
 
-/* RESULT */
+/* =====================================================
+   RESULT
+===================================================== */
 
 .result-card {
     background: white;
@@ -374,7 +813,9 @@ button:hover {
 }
 
 
-/* MOBILE */
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 900px) {
 
@@ -382,9 +823,11 @@ button:hover {
         width: 190px;
     }
 
+
     .main-content {
         margin-left: 190px;
     }
+
 
     .cards {
         grid-template-columns:
@@ -396,6 +839,21 @@ button:hover {
 
 @media (max-width: 600px) {
 
+    .login-page {
+        padding: 18px;
+    }
+
+
+    .login-card {
+        padding: 28px 22px;
+    }
+
+
+    .login-heading h2 {
+        font-size: 21px;
+    }
+
+
     .sidebar {
         position: relative;
 
@@ -404,77 +862,15 @@ button:hover {
         height: auto;
     }
 
+
     .main-content {
         margin-left: 0;
     }
+
 
     .cards,
     .two-column {
         grid-template-columns: 1fr;
     }
 
-}
-/* ================= PROFESSIONAL ICONS ================= */
-
-.nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.nav-btn svg {
-    width: 18px;
-    height: 18px;
-    stroke-width: 2;
-    flex-shrink: 0;
-}
-
-.user {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.user svg {
-    width: 18px;
-    height: 18px;
-}
-
-.goal-header span {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.goal-header h3 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.goal-header svg {
-    width: 18px;
-    height: 18px;
-}
-
-.recommendation h2 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.recommendation h2 svg {
-    width: 20px;
-    height: 20px;
-}
-
-.expense-item span {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.expense-item svg {
-    width: 18px;
-    height: 18px;
 }
