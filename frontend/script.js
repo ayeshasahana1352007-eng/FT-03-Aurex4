@@ -1,34 +1,116 @@
+// ================= LOGIN =================
+
+function loginUser(event) {
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value.trim();
+
+    const message =
+        document.getElementById("loginMessage");
+
+    const loginPage =
+        document.getElementById("loginPage");
+
+    const appContent =
+        document.getElementById("appContent");
+
+
+    if (!email || !password) {
+
+        message.textContent =
+            "Please enter your email and password.";
+
+        return;
+    }
+
+
+    // Frontend prototype login
+    // Backend authentication can be connected later.
+
+    message.textContent = "";
+
+
+    loginPage.style.display = "none";
+
+    appContent.style.display = "block";
+
+
+    // Load Lucide icons again
+    if (typeof lucide !== "undefined") {
+
+        lucide.createIcons();
+
+    }
+
+}
+
+
+
 // ================= PAGE NAVIGATION =================
 
 function showPage(pageId) {
 
     // Hide all pages
-    const pages = document.querySelectorAll(".page");
+
+    const pages =
+        document.querySelectorAll(".page");
+
 
     pages.forEach(page => {
+
         page.classList.remove("active-page");
+
     });
 
 
     // Show selected page
+
     const selectedPage =
         document.getElementById(pageId);
 
+
     if (selectedPage) {
+
         selectedPage.classList.add("active-page");
+
     }
 
 
     // Update sidebar button
+
     const buttons =
         document.querySelectorAll(".nav-btn");
 
+
     buttons.forEach(button => {
+
         button.classList.remove("active");
+
     });
 
-    event.target.classList.add("active");
+
+    // Find the clicked button
+
+    if (event && event.target) {
+
+        const clickedButton =
+            event.target.closest(".nav-btn");
+
+        if (clickedButton) {
+
+            clickedButton.classList.add("active");
+
+        }
+
+    }
+
 }
+
 
 
 // ================= PROFILE =================
@@ -76,6 +158,7 @@ function saveProfile() {
 }
 
 
+
 // ================= EXPENSE =================
 
 function addExpense() {
@@ -98,7 +181,9 @@ function addExpense() {
 
     if (!amount) {
 
-        alert("Please enter an amount.");
+        alert(
+            "Please enter an amount."
+        );
 
         return;
     }
@@ -113,13 +198,25 @@ function addExpense() {
     const item =
         document.createElement("div");
 
+
     item.className =
         "expense-item";
 
 
     item.innerHTML = `
-        <span>💸 ${category}</span>
-        <strong>₹${amount}</strong>
+
+        <span>
+
+            <i data-lucide="receipt"></i>
+
+            ${category}
+
+        </span>
+
+        <strong>
+            ₹${amount}
+        </strong>
+
     `;
 
 
@@ -130,10 +227,20 @@ function addExpense() {
         "expenseAmount"
     ).value = "";
 
+
     document.getElementById(
         "expenseDescription"
     ).value = "";
+
+
+    if (typeof lucide !== "undefined") {
+
+        lucide.createIcons();
+
+    }
+
 }
+
 
 
 // ================= SCHEDULED EXPENSE =================
@@ -175,17 +282,30 @@ function addScheduledExpense() {
     const item =
         document.createElement("div");
 
+
     item.className =
         "expense-item";
 
 
     item.innerHTML = `
+
         <div>
-            <strong>${name}</strong>
-            <p>${date}</p>
+
+            <strong>
+                ${name}
+            </strong>
+
+            <p>
+                ${date}
+            </p>
+
         </div>
 
-        <strong>₹${amount}</strong>
+
+        <strong>
+            ₹${amount}
+        </strong>
+
     `;
 
 
@@ -196,10 +316,13 @@ function addScheduledExpense() {
         "scheduledName"
     ).value = "";
 
+
     document.getElementById(
         "scheduledAmount"
     ).value = "";
+
 }
+
 
 
 // ================= GOAL =================
@@ -211,12 +334,14 @@ function addGoal() {
             "goalName"
         ).value;
 
+
     const target =
         Number(
             document.getElementById(
                 "goalTarget"
             ).value
         );
+
 
     const saved =
         Number(
@@ -252,6 +377,7 @@ function addGoal() {
     const card =
         document.createElement("div");
 
+
     card.className =
         "section-card";
 
@@ -260,7 +386,14 @@ function addGoal() {
 
         <div class="goal-header">
 
-            <h3>🎯 ${name}</h3>
+            <h3>
+
+                <i data-lucide="target"></i>
+
+                ${name}
+
+            </h3>
+
 
             <strong>
                 ₹${saved} / ₹${target}
@@ -268,14 +401,16 @@ function addGoal() {
 
         </div>
 
+
         <div class="progress">
 
             <div
                 class="progress-bar"
-                style="width:${percentage}%"
-            ></div>
+                style="width:${percentage}%">
+            </div>
 
         </div>
+
 
         <p>
             ${percentage.toFixed(0)}% completed
@@ -285,7 +420,16 @@ function addGoal() {
 
 
     goalList.appendChild(card);
+
+
+    if (typeof lucide !== "undefined") {
+
+        lucide.createIcons();
+
+    }
+
 }
+
 
 
 // ================= CONTRIBUTION =================
@@ -316,7 +460,9 @@ function addContribution() {
     document.getElementById(
         "contributionAmount"
     ).value = "";
+
 }
+
 
 
 // ================= WHAT IF =================
@@ -367,39 +513,60 @@ function simulate() {
 
     result.innerHTML = `
 
-        <h3>Simulation Result</h3>
+        <h3>
+            Simulation Result
+        </h3>
+
 
         <p>
+
             Current Income:
+
             <strong>
                 ₹${currentIncome}
             </strong>
+
         </p>
 
+
         <p>
+
             New Income:
+
             <strong>
                 ₹${newIncome}
             </strong>
+
         </p>
 
+
         <p>
+
             Estimated Monthly Savings:
+
             <strong>
                 ₹${newSavings}
             </strong>
+
         </p>
 
+
         <p>
+
             ${
                 newSavings < currentSavings
-                ? "⚠ Your savings capacity has decreased."
-                : "✅ Your savings capacity has improved."
+
+                ? "Your savings capacity has decreased."
+
+                : "Your savings capacity has improved."
             }
+
         </p>
 
     `;
+
 }
+
 
 
 // ================= CHARTS =================
@@ -415,26 +582,32 @@ if (expenseChart) {
     new Chart(
         expenseChart,
         {
+
             type: "doughnut",
 
             data: {
 
                 labels: [
+
                     "Food",
                     "Transport",
                     "Shopping",
                     "Bills",
                     "Entertainment"
+
                 ],
+
 
                 datasets: [{
 
                     data: [
+
                         4000,
                         2000,
                         3500,
                         5000,
                         1500
+
                     ]
 
                 }]
@@ -443,7 +616,9 @@ if (expenseChart) {
 
         }
     );
+
 }
+
 
 
 const monthlyChart =
@@ -457,17 +632,21 @@ if (monthlyChart) {
     new Chart(
         monthlyChart,
         {
+
             type: "bar",
 
             data: {
 
                 labels: [
+
                     "May",
                     "June",
                     "July",
                     "August",
                     "September"
+
                 ],
+
 
                 datasets: [{
 
@@ -475,11 +654,13 @@ if (monthlyChart) {
                         "Monthly Expenses",
 
                     data: [
+
                         16000,
                         17500,
                         15000,
                         19000,
                         18000
+
                     ]
 
                 }]
@@ -488,4 +669,5 @@ if (monthlyChart) {
 
         }
     );
+
 }
