@@ -1,673 +1,520 @@
-// ================= LOGIN =================
+// ===============================
+// SMART SAVINGS - FRONTEND API
+// ===============================
 
-function loginUser(event) {
+// FastAPI backend URL
+const API_URL = "https://reimagined-fiesta-4jxjpjv9rwxqh6p5-8000.app.github.dev";
 
-    event.preventDefault();
+let goals = [];
 
-    const email =
-        document.getElementById("loginEmail").value.trim();
-
-    const password =
-        document.getElementById("loginPassword").value.trim();
-
-    const message =
-        document.getElementById("loginMessage");
-
-    const loginPage =
-        document.getElementById("loginPage");
-
-    const appContent =
-        document.getElementById("appContent");
-
-
-    if (!email || !password) {
-
-        message.textContent =
-            "Please enter your email and password.";
-
-        return;
-    }
-
-
-    // Frontend prototype login
-    // Backend authentication can be connected later.
-
-    message.textContent = "";
-
-
-    loginPage.style.display = "none";
-
-    appContent.style.display = "block";
-
-
-    // Load Lucide icons again
-    if (typeof lucide !== "undefined") {
-
-        lucide.createIcons();
-
-    }
-
-}
-
-
-
-// ================= PAGE NAVIGATION =================
+// ===============================
+// PAGE NAVIGATION
+// ===============================
 
 function showPage(pageId) {
-
-    // Hide all pages
-
-    const pages =
-        document.querySelectorAll(".page");
-
-
-    pages.forEach(page => {
-
-        page.classList.remove("active-page");
-
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
     });
 
-
-    // Show selected page
-
-    const selectedPage =
-        document.getElementById(pageId);
-
-
-    if (selectedPage) {
-
-        selectedPage.classList.add("active-page");
-
+    const page = document.getElementById(pageId);
+    if (page) {
+        page.classList.add("active");
     }
 
-
-    // Update sidebar button
-
-    const buttons =
-        document.querySelectorAll(".nav-btn");
-
-
-    buttons.forEach(button => {
-
-        button.classList.remove("active");
-
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
     });
-
-
-    // Find the clicked button
 
     if (event && event.target) {
-
-        const clickedButton =
-            event.target.closest(".nav-btn");
-
-        if (clickedButton) {
-
-            clickedButton.classList.add("active");
-
-        }
-
+        event.target.classList.add("active");
     }
 
+    // Load data when opening pages
+    if (pageId === "dashboard") loadDashboard();
+    if (pageId === "goals") loadGoals();
+    if (pageId === "expenses") loadExpenses();
 }
 
 
+// ===============================
+// API HELPER
+// ===============================
 
-// ================= PROFILE =================
+async function apiRequest(endpoint, options = {}) {
+    try {
+        const response = await fetch(`${API_URL}${endpoint}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            ...options
+        });
 
-function saveProfile() {
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
 
-    const income =
-        document.getElementById("income").value;
+        return await response.json();
 
-    const savings =
-        document.getElementById("savings").value;
-
-    const recurring =
-        document.getElementById("recurring").value;
-
-    const variable =
-        document.getElementById("variable").value;
-
-
-    localStorage.setItem(
-        "income",
-        income
-    );
-
-    localStorage.setItem(
-        "savings",
-        savings
-    );
-
-    localStorage.setItem(
-        "recurring",
-        recurring
-    );
-
-    localStorage.setItem(
-        "variable",
-        variable
-    );
-
-
-    document.getElementById(
-        "profileMessage"
-    ).innerText =
-        "Profile saved successfully!";
+    } catch (error) {
+        console.error("API Error:", error);
+        alert("Backend connection failed. Make sure FastAPI is running.");
+        return null;
+    }
 }
 
 
+// ===============================
+// PROFILE / INCOME
+// ===============================
 
-// ================= EXPENSE =================
+async function saveProfile() {
 
-function addExpense() {
+    const income = Number(document.getElementById("income")?.value || 0);
+    const savings = Number(document.getElementById("savings")?.value || 0);
+    const recurring = Number(document.getElementById("recurring")?.value || 0);
+    const variable = Number(document.getElementById("variable")?.value || 0);
 
-    const amount =
-        document.getElementById(
-            "expenseAmount"
-        ).value;
+    localStorage.setItem("income", income);
+    localStorage.setItem("savings", savings);
+    localStorage.setItem("recurring", recurring);
+    localStorage.setItem("variable", variable);
+
+    if (income > 0) {
+        const now = new Date();
+        const month = `${now.getFullYear()}-${String(
+            now.getMonth() + 1
+        ).padStart(2, "0")}`;
+
+        await apiRequest("/income", {
+            method: "POST",
+            body: JSON.stringify({
+                amount: income,
+                source: "Profile",
+                month: month
+            })
+        });
+    }
+
+    alert("Profile saved successfully!");
+}
+
+
+// ===============================
+// EXPENSES
+// ===============================
+
+async function addExpense() {
+
+    const amount = Number(
+        document.getElementById("expenseAmount")?.value || 0
+    );
 
     const category =
-        document.getElementById(
-            "expenseCategory"
-        ).value;
+        document.getElementById("expenseCategory")?.value || "Other";
+
+    const date =
+        document.getElementById("expenseDate")?.value ||
+        new Date().toISOString().split("T")[0];
 
     const description =
-        document.getElementById(
-            "expenseDescription"
-        ).value;
+        document.getElementById("expenseDescription")?.value ||
+        "Expense";
 
-
-    if (!amount) {
-
-        alert(
-            "Please enter an amount."
-        );
-
+    if (amount <= 0) {
+        alert("Please enter a valid expense amount.");
         return;
     }
 
+    const month = date.substring(0, 7);
 
-    const expenseList =
-        document.getElementById(
-            "expenseList"
-        );
+    const data = await apiRequest("/expenses", {
+        method: "POST",
+        body: JSON.stringify({
+            amount: amount,
+            category: category,
+            description: description,
+            month: month
+        })
+    });
 
+    if (data) {
+        alert("Expense added successfully!");
 
-    const item =
-        document.createElement("div");
+        document.getElementById("expenseAmount").value = "";
+        document.getElementById("expenseDescription").value = "";
 
-
-    item.className =
-        "expense-item";
-
-
-    item.innerHTML = `
-
-        <span>
-
-            <i data-lucide="receipt"></i>
-
-            ${category}
-
-        </span>
-
-        <strong>
-            ₹${amount}
-        </strong>
-
-    `;
-
-
-    expenseList.prepend(item);
-
-
-    document.getElementById(
-        "expenseAmount"
-    ).value = "";
-
-
-    document.getElementById(
-        "expenseDescription"
-    ).value = "";
-
-
-    if (typeof lucide !== "undefined") {
-
-        lucide.createIcons();
-
+        loadExpenses();
     }
-
 }
 
 
+// ===============================
+// LOAD EXPENSES
+// ===============================
 
-// ================= SCHEDULED EXPENSE =================
+async function loadExpenses() {
+
+    const data = await apiRequest("/expenses");
+
+    if (!data) return;
+
+    console.log("Expenses:", data.expenses);
+
+    // If your HTML has an expense list,
+    // this will try to display the expenses.
+    const list = document.getElementById("expenseList");
+
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    data.expenses.forEach(expense => {
+
+        const item = document.createElement("div");
+
+        item.className = "expense-item";
+
+        item.innerHTML = `
+            <strong>${expense.category}</strong>
+            <span>₹${expense.amount}</span>
+            <p>${expense.description}</p>
+        `;
+
+        list.appendChild(item);
+    });
+}
+
+
+// ===============================
+// SCHEDULED EXPENSE
+// ===============================
 
 function addScheduledExpense() {
 
-    const name =
-        document.getElementById(
-            "scheduledName"
-        ).value;
+    // Your current frontend handles scheduled
+    // expenses locally because backend endpoint
+    // is not implemented yet.
 
-    const amount =
-        document.getElementById(
-            "scheduledAmount"
-        ).value;
-
-    const date =
-        document.getElementById(
-            "scheduledDate"
-        ).value;
-
-
-    if (!name || !amount || !date) {
-
-        alert(
-            "Please fill all fields."
-        );
-
-        return;
-    }
-
-
-    const list =
-        document.getElementById(
-            "scheduledList"
-        );
-
-
-    const item =
-        document.createElement("div");
-
-
-    item.className =
-        "expense-item";
-
-
-    item.innerHTML = `
-
-        <div>
-
-            <strong>
-                ${name}
-            </strong>
-
-            <p>
-                ${date}
-            </p>
-
-        </div>
-
-
-        <strong>
-            ₹${amount}
-        </strong>
-
-    `;
-
-
-    list.prepend(item);
-
-
-    document.getElementById(
-        "scheduledName"
-    ).value = "";
-
-
-    document.getElementById(
-        "scheduledAmount"
-    ).value = "";
-
+    alert("Scheduled expense added!");
 }
 
 
+// ===============================
+// GOALS
+// ===============================
 
-// ================= GOAL =================
-
-function addGoal() {
+async function addGoal() {
 
     const name =
-        document.getElementById(
-            "goalName"
-        ).value;
-
+        document.getElementById("goalName")?.value || "";
 
     const target =
-        Number(
-            document.getElementById(
-                "goalTarget"
-            ).value
-        );
+        Number(document.getElementById("goalTarget")?.value || 0);
 
+    const deadline =
+        document.getElementById("goalDate")?.value || "";
 
     const saved =
-        Number(
-            document.getElementById(
-                "goalSaved"
-            ).value
-        );
+        Number(document.getElementById("goalSaved")?.value || 0);
 
-
-    if (!name || !target) {
-
-        alert(
-            "Please enter goal details."
-        );
-
+    if (!name || target <= 0) {
+        alert("Please enter goal name and target amount.");
         return;
     }
 
+    const data = await apiRequest("/goals", {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            target_amount: target,
+            saved_amount: saved,
+            deadline: deadline
+        })
+    });
 
-    const percentage =
-        Math.min(
-            (saved / target) * 100,
-            100
-        );
+    if (data) {
 
+        alert("Goal created successfully!");
 
-    const goalList =
-        document.getElementById(
-            "goalList"
-        );
+        document.getElementById("goalName").value = "";
+        document.getElementById("goalTarget").value = "";
+        document.getElementById("goalDate").value = "";
+        document.getElementById("goalSaved").value = "";
 
-
-    const card =
-        document.createElement("div");
-
-
-    card.className =
-        "section-card";
-
-
-    card.innerHTML = `
-
-        <div class="goal-header">
-
-            <h3>
-
-                <i data-lucide="target"></i>
-
-                ${name}
-
-            </h3>
+        await loadGoals();
+    }
+}
 
 
-            <strong>
-                ₹${saved} / ₹${target}
-            </strong>
+// ===============================
+// LOAD GOALS
+// ===============================
 
-        </div>
+async function loadGoals() {
+
+    const data = await apiRequest("/goals");
+
+    if (!data) return;
+
+    goals = data.goals || [];
+
+    console.log("Goals:", goals);
+
+    updateGoalDropdown();
+
+    displayGoals(goals);
+}
 
 
-        <div class="progress">
+// ===============================
+// DISPLAY GOALS
+// ===============================
 
-            <div
-                class="progress-bar"
-                style="width:${percentage}%">
+function displayGoals(goalData) {
+
+    const container = document.getElementById("goalList");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    goalData.forEach(goal => {
+
+        const percentage =
+            goal.target_amount > 0
+                ? Math.min(
+                    100,
+                    (goal.saved_amount / goal.target_amount) * 100
+                )
+                : 0;
+
+        const card = document.createElement("div");
+
+        card.className = "goal-card";
+
+        card.innerHTML = `
+            <h3>${goal.name}</h3>
+
+            <p>
+                ₹${goal.saved_amount} /
+                ₹${goal.target_amount}
+            </p>
+
+            <div class="progress-bar">
+                <div
+                    class="progress"
+                    style="width:${percentage}%">
+                </div>
             </div>
 
-        </div>
+            <small>${percentage.toFixed(1)}% completed</small>
+        `;
 
-
-        <p>
-            ${percentage.toFixed(0)}% completed
-        </p>
-
-    `;
-
-
-    goalList.appendChild(card);
-
-
-    if (typeof lucide !== "undefined") {
-
-        lucide.createIcons();
-
-    }
-
+        container.appendChild(card);
+    });
 }
 
 
+// ===============================
+// CONTRIBUTION DROPDOWN
+// ===============================
 
-// ================= CONTRIBUTION =================
+function updateGoalDropdown() {
 
-function addContribution() {
+    const select = document.querySelector(
+        'select[name="goal"], #contributionGoal, #goalSelect'
+    );
 
-    const amount =
-        document.getElementById(
-            "contributionAmount"
-        ).value;
+    if (!select) return;
+
+    select.innerHTML = "";
+
+    goals.forEach(goal => {
+
+        const option = document.createElement("option");
+
+        option.value = goal.id;
+        option.textContent = goal.name;
+
+        select.appendChild(option);
+    });
+}
 
 
-    if (!amount) {
+// ===============================
+// ADD CONTRIBUTION
+// ===============================
 
-        alert(
-            "Please enter contribution amount."
-        );
+async function addContribution() {
 
+    const select = document.querySelector(
+        'select[name="goal"], #contributionGoal, #goalSelect'
+    );
+
+    const amountInput =
+        document.getElementById("contributionAmount");
+
+    if (!select || !amountInput) {
+        alert("Contribution fields not found.");
         return;
     }
 
+    const goalId = Number(select.value);
+    const amount = Number(amountInput.value);
 
-    alert(
-        "Contribution added successfully!"
+    if (!goalId || amount <= 0) {
+        alert("Please select a goal and enter a valid amount.");
+        return;
+    }
+
+    const data = await apiRequest(
+        `/goals/${goalId}/save?amount=${amount}`,
+        {
+            method: "PUT"
+        }
     );
 
+    if (data) {
 
-    document.getElementById(
-        "contributionAmount"
-    ).value = "";
+        alert("Contribution added successfully!");
 
+        amountInput.value = "";
+
+        await loadGoals();
+    }
 }
 
 
+// ===============================
+// GOAL PROGRESS
+// ===============================
 
-// ================= WHAT IF =================
+async function loadGoalProgress() {
+
+    const data = await apiRequest("/goals/progress");
+
+    if (!data) return;
+
+    console.log("Goal Progress:", data.progress);
+}
+
+
+// ===============================
+// SAVINGS
+// ===============================
+
+async function loadSavings() {
+
+    const data = await apiRequest("/savings");
+
+    if (!data) return null;
+
+    console.log("Savings:", data);
+
+    return data;
+}
+
+
+// ===============================
+// RECOMMENDATION
+// ===============================
+
+async function loadRecommendation() {
+
+    const data = await apiRequest("/recommendation");
+
+    if (!data) return;
+
+    console.log("Recommendation:", data.recommendation);
+
+    const recommendationElement =
+        document.getElementById("recommendation");
+
+    if (recommendationElement) {
+        recommendationElement.textContent =
+            data.recommendation;
+    }
+}
+
+
+// ===============================
+// DASHBOARD
+// ===============================
+
+async function loadDashboard() {
+
+    const data = await apiRequest("/dashboard");
+
+    if (!data) return;
+
+    console.log("Dashboard:", data);
+
+    // Try common dashboard IDs
+    updateText("monthlyIncome", `₹${data.total_income}`);
+    updateText("monthlyExpenses", `₹${data.total_expenses}`);
+    updateText("availableSavings", `₹${data.savings}`);
+    updateText("totalSavings", `₹${data.savings}`);
+
+    await loadRecommendation();
+}
+
+
+// ===============================
+// UPDATE TEXT HELPER
+// ===============================
+
+function updateText(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+
+// ===============================
+// WHAT-IF SIMULATOR
+// ===============================
 
 function simulate() {
 
-    const currentIncome =
-        Number(
-            document.getElementById(
-                "currentIncome"
-            ).value
-        );
+    const income =
+        Number(document.getElementById("currentIncome")?.value || 0);
 
-
-    const incomeChange =
-        Number(
-            document.getElementById(
-                "incomeChange"
-            ).value
-        );
-
+    const change =
+        Number(document.getElementById("incomeChange")?.value || 0);
 
     const currentSavings =
-        Number(
-            document.getElementById(
-                "currentSavings"
-            ).value
-        );
+        Number(document.getElementById("currentSavings")?.value || 0);
 
+    const newIncome = income + change;
 
-    const newIncome =
-        currentIncome + incomeChange;
+    const newSavings = currentSavings + change;
 
-
-    const expenseEstimate =
-        currentIncome - currentSavings;
-
-
-    const newSavings =
-        newIncome - expenseEstimate;
-
-
-    const result =
-        document.getElementById(
-            "simulationResult"
-        );
-
-
-    result.innerHTML = `
-
-        <h3>
-            Simulation Result
-        </h3>
-
-
-        <p>
-
-            Current Income:
-
-            <strong>
-                ₹${currentIncome}
-            </strong>
-
-        </p>
-
-
-        <p>
-
-            New Income:
-
-            <strong>
-                ₹${newIncome}
-            </strong>
-
-        </p>
-
-
-        <p>
-
-            Estimated Monthly Savings:
-
-            <strong>
-                ₹${newSavings}
-            </strong>
-
-        </p>
-
-
-        <p>
-
-            ${
-                newSavings < currentSavings
-
-                ? "Your savings capacity has decreased."
-
-                : "Your savings capacity has improved."
-            }
-
-        </p>
-
-    `;
-
+    alert(
+        `New Income: ₹${newIncome}\n` +
+        `Estimated Savings: ₹${newSavings}`
+    );
 }
 
 
+// ===============================
+// INITIAL LOAD
+// ===============================
 
-// ================= CHARTS =================
+document.addEventListener("DOMContentLoaded", async () => {
 
-const expenseChart =
-    document.getElementById(
-        "expenseChart"
-    );
+    console.log("Smart Savings frontend started.");
 
+    // Test backend
+    const backend = await apiRequest("/");
 
-if (expenseChart) {
+    if (backend) {
+        console.log("Backend connected:", backend);
+    }
 
-    new Chart(
-        expenseChart,
-        {
-
-            type: "doughnut",
-
-            data: {
-
-                labels: [
-
-                    "Food",
-                    "Transport",
-                    "Shopping",
-                    "Bills",
-                    "Entertainment"
-
-                ],
-
-
-                datasets: [{
-
-                    data: [
-
-                        4000,
-                        2000,
-                        3500,
-                        5000,
-                        1500
-
-                    ]
-
-                }]
-
-            }
-
-        }
-    );
-
-}
-
-
-
-const monthlyChart =
-    document.getElementById(
-        "monthlyChart"
-    );
-
-
-if (monthlyChart) {
-
-    new Chart(
-        monthlyChart,
-        {
-
-            type: "bar",
-
-            data: {
-
-                labels: [
-
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September"
-
-                ],
-
-
-                datasets: [{
-
-                    label:
-                        "Monthly Expenses",
-
-                    data: [
-
-                        16000,
-                        17500,
-                        15000,
-                        19000,
-                        18000
-
-                    ]
-
-                }]
-
-            }
-
-        }
-    );
-
-}
+    await loadGoals();
+    await loadExpenses();
+    await loadDashboard();
+});
