@@ -414,3 +414,67 @@ button:hover {
     }
 
 }
+/* ================= PROFESSIONAL ICONS ================= */
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user svg {
+    width: 18px;
+    height: 18px;
+}
+
+.goal-header span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.goal-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.goal-header svg {
+    width: 18px;
+    height: 18px;
+}
+
+.recommendation h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recommendation h2 svg {
+    width: 20px;
+    height: 20px;
+}
+
+.expense-item span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.expense-item svg {
+    width: 18px;
+    height: 18px;
+}
