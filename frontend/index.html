@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>SmartSave - Financial Planner</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
 
-    <!-- SIDEBAR -->
+    <!-- ================= SIDEBAR ================= -->
+
     <aside class="sidebar">
 
         <div class="logo">
@@ -23,46 +29,58 @@
         </div>
 
         <nav>
+
             <button onclick="showPage('dashboard')" class="nav-btn active">
-                🏠 Dashboard
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
             </button>
 
             <button onclick="showPage('profile')" class="nav-btn">
-                👤 Profile
+                <i data-lucide="user"></i>
+                <span>Profile</span>
             </button>
 
             <button onclick="showPage('expenses')" class="nav-btn">
-                💸 Expenses
+                <i data-lucide="wallet"></i>
+                <span>Expenses</span>
             </button>
 
             <button onclick="showPage('scheduled')" class="nav-btn">
-                📅 Scheduled Expenses
+                <i data-lucide="calendar-days"></i>
+                <span>Scheduled Expenses</span>
             </button>
 
             <button onclick="showPage('goals')" class="nav-btn">
-                🎯 Goals
+                <i data-lucide="target"></i>
+                <span>Goals</span>
             </button>
 
             <button onclick="showPage('contributions')" class="nav-btn">
-                💰 Contributions
+                <i data-lucide="hand-coins"></i>
+                <span>Contributions</span>
             </button>
 
             <button onclick="showPage('analytics')" class="nav-btn">
-                📊 Analytics
+                <i data-lucide="chart-no-axes-combined"></i>
+                <span>Analytics</span>
             </button>
 
             <button onclick="showPage('whatif')" class="nav-btn">
-                🔮 What-If Simulator
+                <i data-lucide="calculator"></i>
+                <span>What-If Simulator</span>
             </button>
+
         </nav>
 
     </aside>
 
 
-    <!-- MAIN CONTENT -->
+    <!-- ================= MAIN CONTENT ================= -->
+
     <main class="main-content">
 
         <!-- HEADER -->
+
         <header class="topbar">
 
             <div>
@@ -71,7 +89,8 @@
             </div>
 
             <div class="user">
-                👋 Welcome
+                <i data-lucide="hand"></i>
+                <span>Welcome</span>
             </div>
 
         </header>
@@ -83,108 +102,203 @@
 
             <h2>Dashboard</h2>
 
+
             <!-- SUMMARY CARDS -->
 
             <div class="cards">
 
                 <div class="card">
+
                     <p>Monthly Income</p>
+
                     <h2>₹30,000</h2>
-                    <span class="positive">+5% this month</span>
+
+                    <span class="positive">
+                        +5% this month
+                    </span>
+
                 </div>
 
+
                 <div class="card">
+
                     <p>Monthly Expenses</p>
+
                     <h2>₹18,000</h2>
-                    <span>Current spending</span>
+
+                    <span>
+                        Current spending
+                    </span>
+
                 </div>
 
+
                 <div class="card">
+
                     <p>Available Savings</p>
+
                     <h2>₹12,000</h2>
-                    <span class="positive">Available</span>
+
+                    <span class="positive">
+                        Available
+                    </span>
+
                 </div>
 
+
                 <div class="card">
+
                     <p>Total Savings</p>
+
                     <h2>₹25,000</h2>
-                    <span>Across all goals</span>
+
+                    <span>
+                        Across all goals
+                    </span>
+
                 </div>
 
             </div>
 
 
-            <!-- GOALS -->
+            <!-- ================= GOAL PROGRESS ================= -->
 
             <div class="section-card">
 
                 <div class="section-title">
+
                     <h2>Goal Progress</h2>
+
                     <button onclick="showPage('goals')">
                         View All
                     </button>
-                </div>
-
-                <div class="goal">
-
-                    <div class="goal-header">
-                        <span>💻 New Laptop</span>
-                        <span>₹10,000 / ₹50,000</span>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar" style="width:20%"></div>
-                    </div>
-
-                    <p>20% completed</p>
 
                 </div>
 
 
+                <!-- NEW LAPTOP -->
+
                 <div class="goal">
 
                     <div class="goal-header">
-                        <span>🛡️ Emergency Fund</span>
-                        <span>₹15,000 / ₹30,000</span>
+
+                        <span>
+                            <i data-lucide="laptop"></i>
+                            New Laptop
+                        </span>
+
+                        <span>
+                            ₹10,000 / ₹50,000
+                        </span>
+
                     </div>
+
 
                     <div class="progress">
-                        <div class="progress-bar" style="width:50%"></div>
+
+                        <div
+                            class="progress-bar"
+                            style="width:20%">
+                        </div>
+
                     </div>
 
-                    <p>50% completed</p>
+
+                    <p>
+                        20% completed
+                    </p>
+
+                </div>
+
+
+                <!-- EMERGENCY FUND -->
+
+                <div class="goal">
+
+                    <div class="goal-header">
+
+                        <span>
+                            <i data-lucide="shield-check"></i>
+                            Emergency Fund
+                        </span>
+
+                        <span>
+                            ₹15,000 / ₹30,000
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width:50%">
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        50% completed
+                    </p>
 
                 </div>
 
             </div>
 
 
-            <!-- TWO COLUMN -->
+            <!-- ================= TWO COLUMN ================= -->
 
             <div class="two-column">
 
-                <!-- UPCOMING EXPENSE -->
+
+                <!-- UPCOMING EXPENSES -->
 
                 <div class="section-card">
 
                     <h2>Upcoming Expenses</h2>
 
+
                     <div class="expense-item">
+
                         <div>
-                            <strong>College Fee</strong>
-                            <p>15 December</p>
+
+                            <strong>
+                                College Fee
+                            </strong>
+
+                            <p>
+                                15 December
+                            </p>
+
                         </div>
 
-                        <strong>₹20,000</strong>
+                        <strong>
+                            ₹20,000
+                        </strong>
+
                     </div>
 
+
                     <div class="expense-item">
+
                         <div>
-                            <strong>Insurance</strong>
-                            <p>20 December</p>
+
+                            <strong>
+                                Insurance
+                            </strong>
+
+                            <p>
+                                20 December
+                            </p>
+
                         </div>
 
-                        <strong>₹5,000</strong>
+                        <strong>
+                            ₹5,000
+                        </strong>
+
                     </div>
 
                 </div>
@@ -194,16 +308,28 @@
 
                 <div class="section-card recommendation">
 
-                    <h2>💡 Recommendation</h2>
+                    <h2>
+
+                        <i data-lucide="lightbulb"></i>
+
+                        Recommendation
+
+                    </h2>
+
 
                     <p>
+
                         Your current monthly savings may be lower
                         than the amount required to reach all your
                         goals on time.
+
                     </p>
 
+
                     <button onclick="showPage('whatif')">
+
                         Explore What-If
+
                     </button>
 
                 </div>
@@ -219,23 +345,55 @@
 
             <h2>Financial Profile</h2>
 
+
             <div class="form-card">
 
-                <label>Monthly Income</label>
-                <input type="number" id="income" placeholder="30000">
+                <label>
+                    Monthly Income
+                </label>
 
-                <label>Existing Savings</label>
-                <input type="number" id="savings" placeholder="25000">
+                <input
+                    type="number"
+                    id="income"
+                    placeholder="30000">
 
-                <label>Monthly Recurring Expenses</label>
-                <input type="number" id="recurring" placeholder="10000">
 
-                <label>Average Variable Expenses</label>
-                <input type="number" id="variable" placeholder="8000">
+                <label>
+                    Existing Savings
+                </label>
+
+                <input
+                    type="number"
+                    id="savings"
+                    placeholder="25000">
+
+
+                <label>
+                    Monthly Recurring Expenses
+                </label>
+
+                <input
+                    type="number"
+                    id="recurring"
+                    placeholder="10000">
+
+
+                <label>
+                    Average Variable Expenses
+                </label>
+
+                <input
+                    type="number"
+                    id="variable"
+                    placeholder="8000">
+
 
                 <button onclick="saveProfile()">
+
                     Save Profile
+
                 </button>
+
 
                 <p id="profileMessage"></p>
 
@@ -250,31 +408,63 @@
 
             <h2>Expense Management</h2>
 
+
             <div class="form-card">
 
-                <label>Amount</label>
-                <input type="number" id="expenseAmount">
+                <label>
+                    Amount
+                </label>
 
-                <label>Category</label>
+                <input
+                    type="number"
+                    id="expenseAmount">
+
+
+                <label>
+                    Category
+                </label>
 
                 <select id="expenseCategory">
+
                     <option>Food</option>
+
                     <option>Transport</option>
+
                     <option>Education</option>
+
                     <option>Shopping</option>
+
                     <option>Entertainment</option>
+
                     <option>Bills</option>
+
                     <option>Other</option>
+
                 </select>
 
-                <label>Date</label>
-                <input type="date" id="expenseDate">
 
-                <label>Description</label>
-                <input type="text" id="expenseDescription">
+                <label>
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="expenseDate">
+
+
+                <label>
+                    Description
+                </label>
+
+                <input
+                    type="text"
+                    id="expenseDescription">
+
 
                 <button onclick="addExpense()">
+
                     Add Expense
+
                 </button>
 
             </div>
@@ -282,24 +472,64 @@
 
             <div class="section-card">
 
-                <h2>Recent Expenses</h2>
+                <h2>
+                    Recent Expenses
+                </h2>
+
 
                 <div id="expenseList">
 
-                    <div class="expense-item">
-                        <span>🍔 Food</span>
-                        <strong>₹250</strong>
-                    </div>
 
                     <div class="expense-item">
-                        <span>🚌 Transport</span>
-                        <strong>₹100</strong>
+
+                        <span>
+
+                            <i data-lucide="utensils"></i>
+
+                            Food
+
+                        </span>
+
+                        <strong>
+                            ₹250
+                        </strong>
+
                     </div>
 
+
                     <div class="expense-item">
-                        <span>🛍️ Shopping</span>
-                        <strong>₹500</strong>
+
+                        <span>
+
+                            <i data-lucide="bus"></i>
+
+                            Transport
+
+                        </span>
+
+                        <strong>
+                            ₹100
+                        </strong>
+
                     </div>
+
+
+                    <div class="expense-item">
+
+                        <span>
+
+                            <i data-lucide="shopping-bag"></i>
+
+                            Shopping
+
+                        </span>
+
+                        <strong>
+                            ₹500
+                        </strong>
+
+                    </div>
+
 
                 </div>
 
@@ -312,21 +542,44 @@
 
         <section id="scheduled" class="page">
 
-            <h2>Scheduled Expenses</h2>
+            <h2>
+                Scheduled Expenses
+            </h2>
+
 
             <div class="form-card">
 
-                <label>Expense Name</label>
-                <input type="text" id="scheduledName">
+                <label>
+                    Expense Name
+                </label>
 
-                <label>Amount</label>
-                <input type="number" id="scheduledAmount">
+                <input
+                    type="text"
+                    id="scheduledName">
 
-                <label>Due Date</label>
-                <input type="date" id="scheduledDate">
+
+                <label>
+                    Amount
+                </label>
+
+                <input
+                    type="number"
+                    id="scheduledAmount">
+
+
+                <label>
+                    Due Date
+                </label>
+
+                <input
+                    type="date"
+                    id="scheduledDate">
+
 
                 <button onclick="addScheduledExpense()">
+
                     Add Scheduled Expense
+
                 </button>
 
             </div>
@@ -334,17 +587,31 @@
 
             <div class="section-card">
 
-                <h2>Upcoming Payments</h2>
+                <h2>
+                    Upcoming Payments
+                </h2>
+
 
                 <div id="scheduledList">
 
                     <div class="expense-item">
+
                         <div>
-                            <strong>College Fee</strong>
-                            <p>15 December</p>
+
+                            <strong>
+                                College Fee
+                            </strong>
+
+                            <p>
+                                15 December
+                            </p>
+
                         </div>
 
-                        <strong>₹20,000</strong>
+                        <strong>
+                            ₹20,000
+                        </strong>
+
                     </div>
 
                 </div>
@@ -358,32 +625,69 @@
 
         <section id="goals" class="page">
 
-            <h2>Financial Goals</h2>
+            <h2>
+                Financial Goals
+            </h2>
+
 
             <div class="form-card">
 
-                <label>Goal Name</label>
-                <input type="text" id="goalName" placeholder="New Laptop">
+                <label>
+                    Goal Name
+                </label>
 
-                <label>Target Amount</label>
-                <input type="number" id="goalTarget">
+                <input
+                    type="text"
+                    id="goalName"
+                    placeholder="New Laptop">
 
-                <label>Target Date</label>
-                <input type="date" id="goalDate">
 
-                <label>Current Saved</label>
-                <input type="number" id="goalSaved">
+                <label>
+                    Target Amount
+                </label>
 
-                <label>Priority</label>
+                <input
+                    type="number"
+                    id="goalTarget">
+
+
+                <label>
+                    Target Date
+                </label>
+
+                <input
+                    type="date"
+                    id="goalDate">
+
+
+                <label>
+                    Current Saved
+                </label>
+
+                <input
+                    type="number"
+                    id="goalSaved">
+
+
+                <label>
+                    Priority
+                </label>
 
                 <select id="goalPriority">
+
                     <option>High</option>
+
                     <option>Medium</option>
+
                     <option>Low</option>
+
                 </select>
 
+
                 <button onclick="addGoal()">
+
                     Create Goal
+
                 </button>
 
             </div>
@@ -391,18 +695,39 @@
 
             <div id="goalList">
 
+
                 <div class="section-card">
 
                     <div class="goal-header">
-                        <h3>💻 New Laptop</h3>
-                        <strong>₹10,000 / ₹50,000</strong>
+
+                        <h3>
+
+                            <i data-lucide="laptop"></i>
+
+                            New Laptop
+
+                        </h3>
+
+                        <strong>
+                            ₹10,000 / ₹50,000
+                        </strong>
+
                     </div>
+
 
                     <div class="progress">
-                        <div class="progress-bar" style="width:20%"></div>
+
+                        <div
+                            class="progress-bar"
+                            style="width:20%">
+                        </div>
+
                     </div>
 
-                    <p>Required monthly saving: ₹5,000</p>
+
+                    <p>
+                        Required monthly saving: ₹5,000
+                    </p>
 
                 </div>
 
@@ -415,25 +740,51 @@
 
         <section id="contributions" class="page">
 
-            <h2>Contributions</h2>
+            <h2>
+                Contributions
+            </h2>
+
 
             <div class="form-card">
 
-                <label>Select Goal</label>
+                <label>
+                    Select Goal
+                </label>
+
 
                 <select>
-                    <option>New Laptop</option>
-                    <option>Emergency Fund</option>
+
+                    <option>
+                        New Laptop
+                    </option>
+
+                    <option>
+                        Emergency Fund
+                    </option>
+
                 </select>
 
-                <label>Amount</label>
-                <input type="number" id="contributionAmount">
 
-                <label>Date</label>
+                <label>
+                    Amount
+                </label>
+
+                <input
+                    type="number"
+                    id="contributionAmount">
+
+
+                <label>
+                    Date
+                </label>
+
                 <input type="date">
 
+
                 <button onclick="addContribution()">
+
                     Add Contribution
+
                 </button>
 
             </div>
@@ -441,16 +792,34 @@
 
             <div class="section-card">
 
-                <h2>Contribution History</h2>
+                <h2>
+                    Contribution History
+                </h2>
+
 
                 <div class="expense-item">
-                    <span>New Laptop</span>
-                    <strong>₹3,000</strong>
+
+                    <span>
+                        New Laptop
+                    </span>
+
+                    <strong>
+                        ₹3,000
+                    </strong>
+
                 </div>
 
+
                 <div class="expense-item">
-                    <span>Emergency Fund</span>
-                    <strong>₹2,000</strong>
+
+                    <span>
+                        Emergency Fund
+                    </span>
+
+                    <strong>
+                        ₹2,000
+                    </strong>
+
                 </div>
 
             </div>
@@ -462,19 +831,27 @@
 
         <section id="analytics" class="page">
 
-            <h2>Analytics</h2>
+            <h2>
+                Analytics
+            </h2>
+
 
             <div class="chart-container">
 
-                <h3>Spending by Category</h3>
+                <h3>
+                    Spending by Category
+                </h3>
 
                 <canvas id="expenseChart"></canvas>
 
             </div>
 
+
             <div class="chart-container">
 
-                <h3>Monthly Expenses</h3>
+                <h3>
+                    Monthly Expenses
+                </h3>
 
                 <canvas id="monthlyChart"></canvas>
 
@@ -487,42 +864,55 @@
 
         <section id="whatif" class="page">
 
-            <h2>What-If Simulator</h2>
+            <h2>
+                What-If Simulator
+            </h2>
+
 
             <div class="form-card">
 
-                <label>Current Monthly Income</label>
+                <label>
+                    Current Monthly Income
+                </label>
 
                 <input
                     type="number"
                     id="currentIncome"
-                    value="30000"
-                >
+                    value="30000">
 
-                <label>Change in Income</label>
+
+                <label>
+                    Change in Income
+                </label>
 
                 <input
                     type="number"
                     id="incomeChange"
-                    placeholder="-5000"
-                >
+                    placeholder="-5000">
 
-                <label>Current Monthly Savings</label>
+
+                <label>
+                    Current Monthly Savings
+                </label>
 
                 <input
                     type="number"
                     id="currentSavings"
-                    value="8000"
-                >
+                    value="8000">
+
 
                 <button onclick="simulate()">
+
                     Simulate
+
                 </button>
 
             </div>
 
 
-            <div id="simulationResult" class="result-card">
+            <div
+                id="simulationResult"
+                class="result-card">
 
                 Enter a change and click Simulate.
 
@@ -530,10 +920,19 @@
 
         </section>
 
+
     </main>
 
 
+    <!-- ================= JAVASCRIPT ================= -->
+
     <script src="script.js"></script>
 
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+
 </body>
+
 </html>
